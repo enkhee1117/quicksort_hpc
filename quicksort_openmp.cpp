@@ -15,6 +15,13 @@ void printArray(const vector<int>& arr);
 
 int main(int argc, char* argv[]) {
 
+    #pragma omp parallel
+    {
+        int thread_id = omp_get_thread_num();
+        int total_threads = omp_get_num_threads();
+        std::cout << "Thread " << thread_id << " of " << total_threads << std::endl;
+    }
+
 //    Default array length
     int array_length = 1000;
 //    Check the argument for array length:
