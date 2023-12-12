@@ -40,8 +40,8 @@ int main(int argc, char* argv[]) {
         }
     }
 //    Array when unsorted:
-    cout << "Unsorted version of the array: \n";
-    printArray(arr);
+//    cout << "Unsorted version of the array: \n";
+//    printArray(arr);
 
 //  Measure the time taken by QuickSort:
     auto start = high_resolution_clock::now();
@@ -84,7 +84,17 @@ int partition(vector<int>& arr, int low, int high) {
 }
 
 void printArray(const vector<int>& arr) {
-    for (int i : arr)
-        cout << i << " ";
+    if(arr.empty()) return;
+
+    int prev = arr[0];
+    cout << prev << " ";
+
+    for (size_t i = 1 ; i < arr.size(); ++i) {
+        if(arr[i] != prev){
+            cout << arr[i] << " ";
+            prev = arr[i];
+        }
+    }
+
     cout << endl;
 }

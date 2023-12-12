@@ -40,8 +40,8 @@ int main(int argc, char* argv[]) {
         }
     }
 //    Array when unsorted:
-    cout << "Unsorted version of the array: \n";
-    printArray(arr);
+//    cout << "Unsorted version of the array: \n";
+//    printArray(arr);
 
 //  Measure the time taken by QuickSort:
     auto start = high_resolution_clock::now();
