@@ -1,3 +1,6 @@
 # ninja log v5
 2	457	1702353075416442079	CMakeFiles/untitled.dir/main.cpp.o	3fc357b544613d1b
 457	504	1702353075473348243	untitled	ac85db47b4f2ece8
+0	456	1702353853205221705	CMakeFiles/untitled.dir/quicksort_mpi.cpp.o	3f27870d16e5d9a2
+0	458	1702353853204664802	CMakeFiles/untitled.dir/quicksort.cpp.o	10ebaa4fa9e1f42
+0	460	1702353853205173081	CMakeFiles/untitled.dir/quicksort_openmp.cpp.o	88179cee1fb39ab4
