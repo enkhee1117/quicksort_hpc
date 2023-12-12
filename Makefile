@@ -1,5 +1,5 @@
 # Compiler and flags
-CXX        = g++
+CXX        = icpc
 MPICXX     = mpicxx
 CXXFLAGS   = -O3 -std=c++11
 OMPFLAGS   = -fopenmp
