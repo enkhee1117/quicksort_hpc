@@ -3,7 +3,7 @@ CXX        = g++
 MPICXX     = mpicxx
 CXXFLAGS   = -O3 -std=c++11
 OMPFLAGS   = -fopenmp
-MPIFLAGS   =
+MPIFLAGS   = -fopenmp
 
 # Executable names
 EXEC_REGULAR = quicksort
