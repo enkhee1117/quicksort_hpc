@@ -15,6 +15,9 @@ void printArray(const vector<int>& arr);
 
 int main(int argc, char* argv[]) {
 
+//    Limiting number of threads:
+    omp_set_num_threads(NUM_THREADS);
+
     #pragma omp parallel
     {
         int thread_id = omp_get_thread_num();
