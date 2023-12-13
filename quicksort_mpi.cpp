@@ -69,8 +69,10 @@ int main(int argc, char* argv[]) {
     auto duration = duration_cast<microseconds>(stop - start);
 
 //    Duration:
-    cout << "Time taken by function: "
-         << duration.count() << " microseconds" << endl;
+    if(world_rank == 0){
+        cout << "Time taken by function: "
+             << duration.count() << " microseconds" << endl;
+    }
 
     MPI_Finalize();
     return 0;
