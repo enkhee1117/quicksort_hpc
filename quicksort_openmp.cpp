@@ -18,12 +18,12 @@ int main(int argc, char* argv[]) {
 //    Limiting number of threads:
     omp_set_num_threads(32);
 
-    #pragma omp parallel
-    {
-        int thread_id = omp_get_thread_num();
-        int total_threads = omp_get_num_threads();
-        std::cout << "Thread " << thread_id << " of " << total_threads << std::endl;
-    }
+//    #pragma omp parallel
+//    {
+//        int thread_id = omp_get_thread_num();
+//        int total_threads = omp_get_num_threads();
+//        std::cout << "Thread " << thread_id << " of " << total_threads << std::endl;
+//    }
 
 //    Default array length
     int array_length = 1000;
