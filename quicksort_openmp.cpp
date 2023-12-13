@@ -16,7 +16,7 @@ void printArray(const vector<int>& arr);
 int main(int argc, char* argv[]) {
 
 //    Limiting number of threads:
-    omp_set_num_threads(32);
+    omp_set_num_threads(8);
 
 //    #pragma omp parallel
 //    {
