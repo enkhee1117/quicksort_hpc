@@ -73,7 +73,7 @@ void quickSort(vector<int>& arr, int low, int high, int depth = 0) {
     if (low < high) {
         int pi = partition(arr, low, high);
 
-        if(depth < 9){
+        if(depth < 3){
             #pragma omp parallel sections
             {
                 #pragma omp section
