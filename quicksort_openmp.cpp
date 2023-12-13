@@ -9,7 +9,7 @@
 using namespace std;
 using namespace std::chrono;
 
-void quickSort(vector<int>& arr, int low, int high);
+void quickSort(vector<int>& arr, int low, int high, int depth);
 int partition(vector<int>& arr, int low, int high);
 void printArray(const vector<int>& arr);
 
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 
 //  Measure the time taken by QuickSort:
     auto start = high_resolution_clock::now();
-    quickSort(arr, 0, arr.size() - 1);
+    quickSort(arr, 0, arr.size() - 1, 0);
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
 
