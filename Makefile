@@ -1,6 +1,8 @@
 # Compiler and flags
 CXX        = icpc
-CXXFLAGS   = -O3 -std=c++11 -qopenmp  # Enable OpenMP
+CXXFLAGS   = -O3 -std=c++11
+OMPFLAGS   = -qopenmp  # Enable OpenMP
+MPICXX     = mpicxx    # MPI Compiler
 
 # Executable names
 EXEC_REGULAR = quicksort
@@ -16,16 +18,12 @@ $(EXEC_REGULAR): quicksort.cpp
 
 # OpenMP Quicksort
 $(EXEC_OMP): quicksort_openmp.cpp
-	$(CXX) $(CXXFLAGS) -o $(EXEC_OMP) quicksort_openmp.cpp
+	$(CXX) $(CXXFLAGS) $(OMPFLAGS) -o $(EXEC_OMP) quicksort_openmp.cpp
 
 # MPI Quicksort
-# Assuming MPI compilation does not require separate flags
 $(EXEC_MPI): quicksort_mpi.cpp
-	$(CXX) $(CXXFLAGS) -o $(EXEC_MPI) quicksort_mpi.cpp
+	$(MPICXX) $(CXXFLAGS) -o $(EXEC_MPI) quicksort_mpi.cpp
 
 # Clean target
 clean:
 	rm -f $(EXEC_REGULAR) $(EXEC_OMP) $(EXEC_MPI) *.o *.d
-
-# Include the dependency files
--include $(OBJS:.o=.d)

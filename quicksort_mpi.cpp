@@ -2,9 +2,8 @@
 #include <vector>
 #include <chrono>
 #include <cstdlib>
-#ifdef _OPENMP
-#include <omp.h>
-#endif
+#include <mpi.h>
+#include <algorithm>
 
 using namespace std;
 using namespace std::chrono;
@@ -14,6 +13,14 @@ int partition(vector<int>& arr, int low, int high);
 void printArray(const vector<int>& arr);
 
 int main(int argc, char* argv[]) {
+
+//    MPI initial:
+    int world_rank, world_size;
+
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+
 
 //    Default array length
     int array_length = 1000;
@@ -25,27 +32,35 @@ int main(int argc, char* argv[]) {
             return 1;
         }
     }
+//    Global DATA:
+    vector<int> global_data;
+    if(world_rank == 0){
+        vector<int> pattern = {3, 1, 4, 90, 5, 9, 200, 600, 500, 3, 5};
 
-//    Creating an array and filling it by repeated pattern:
-    vector<int> pattern = {3, 1, 4, 90, 5, 9, 200, 600, 500, 3, 5};
-    vector<int> arr;
-    arr.reserve(array_length);
-    while (arr.size() < array_length){
-        for(int val : pattern){
-            if(arr.size() < array_length){
-                arr.push_back(val);
-            } else {
-                break;
+        global_data.reserve(array_length);
+        while (global_data.size() < array_length) {
+            for (int val : pattern) {
+                if (global_data.size() < array_length) {
+                    global_data.push_back(val);
+                } else {
+                    break;
+                }
             }
         }
     }
-//    Array when unsorted:
-//    cout << "Unsorted version of the array: \n";
-//    printArray(arr);
+
+    int local_n = array_length / world_size;
+    vector<int> local_data(local_n);
 
 //  Measure the time taken by QuickSort:
     auto start = high_resolution_clock::now();
-    quickSort(arr, 0, arr.size() - 1);
+
+    MPI_Scatter(global_data.data(), local_n, MPI_INT, local_data.data(), local_n, MPI_INT, 0, MPI_COMM_WORLD);
+    // Perform local quicksort
+    quickSort(local_data, 0, local_n - 1);
+    // Gather the sorted subarrays into the global_data array
+    MPI_Gather(local_data.data(), local_n, MPI_INT, global_data.data(), local_n, MPI_INT, 0, MPI_COMM_WORLD);
+
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
 
@@ -56,6 +71,7 @@ int main(int argc, char* argv[]) {
     cout << "Time taken by function: "
          << duration.count() << " microseconds" << endl;
 
+    MPI_Finalize();
     return 0;
 }
 
@@ -98,3 +114,4 @@ void printArray(const vector<int>& arr) {
 
     cout << endl;
 }
+
