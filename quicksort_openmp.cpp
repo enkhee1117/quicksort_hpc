@@ -69,17 +69,24 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-void quickSort(vector<int>& arr, int low, int high) {
+void quickSort(vector<int>& arr, int low, int high, int depth = 0) {
     if (low < high) {
         int pi = partition(arr, low, high);
-#pragma omp parallel sections
-        {
-#pragma omp section
-            quickSort(arr, low, pi - 1);
-#pragma omp section
-            quickSort(arr, pi + 1, high);
-        };
+
+        if(depth < 3){
+            #pragma omp parallel sections
+            {
+                #pragma omp section
+                quickSort(arr, low, pi - 1, depth + 1);
+                #pragma omp section
+                quickSort(arr, pi + 1, high, depth + 1);
+            };
+            } else {
+            quickSort(arr, low, pi - 1, depth + 1);
+            quickSort(arr, pi + 1, high, depth + 1);
+        }
     }
+
 }
 
 int partition(vector<int>& arr, int low, int high) {
