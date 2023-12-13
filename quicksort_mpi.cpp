@@ -52,21 +52,22 @@ int main(int argc, char* argv[]) {
     int local_n = array_length / world_size;
     vector<int> local_data(local_n);
 
-//  Measure the time taken by QuickSort:
-    auto start = high_resolution_clock::now();
 
     MPI_Scatter(global_data.data(), local_n, MPI_INT, local_data.data(), local_n, MPI_INT, 0, MPI_COMM_WORLD);
+
+    //  Measure the time taken by QuickSort:
+    auto start = high_resolution_clock::now();
+
     // Perform local quicksort
     quickSort(local_data, 0, local_n - 1);
     // Gather the sorted subarrays into the global_data array
     MPI_Gather(local_data.data(), local_n, MPI_INT, global_data.data(), local_n, MPI_INT, 0, MPI_COMM_WORLD);
 
+//    STILL lacking final merge
+
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
 
-//    Sorted array:
-    cout << "Sorted array: \n";
-    printArray(arr);
 //    Duration:
     cout << "Time taken by function: "
          << duration.count() << " microseconds" << endl;
